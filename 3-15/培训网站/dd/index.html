@@ -1,0 +1,659 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>嘉禾博研商学院</title>
+<link rel="stylesheet" type="text/css" href="style.css"/>
+<script src="jquery-1.8.2.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="touchSlider.js"></script> 
+<script src="tab.js" type="text/javascript"></script>
+<script type="text/javascript">
+var $$ = function (id) {
+    return "string" == typeof id ? document.getElementById(id) : id;
+};
+
+function Event(e){
+	var oEvent = document.all ? window.event : e;
+	if (document.all) {
+		if(oEvent.type == "mouseout") {
+			oEvent.relatedTarget = oEvent.toElement;
+		}else if(oEvent.type == "mouseover") {
+			oEvent.relatedTarget = oEvent.fromElement;
+		}
+	}
+	return oEvent;
+}
+
+function addEventHandler(oTarget, sEventType, fnHandler) {
+	if (oTarget.addEventListener) {
+		oTarget.addEventListener(sEventType, fnHandler, false);
+	} else if (oTarget.attachEvent) {
+		oTarget.attachEvent("on" + sEventType, fnHandler);
+	} else {
+		oTarget["on" + sEventType] = fnHandler;
+	}
+};
+
+var Class = {
+  create: function() {
+    return function() {
+      this.initialize.apply(this, arguments);
+    }
+  }
+}
+
+Object.extend = function(destination, source) {
+    for (var property in source) {
+        destination[property] = source[property];
+    }
+    return destination;
+}
+
+
+var GlideView = Class.create();
+GlideView.prototype = {
+  //容器对象 容器宽度 展示标签 展示宽度
+  initialize: function(obj, iWidth, sTag, iMaxWidth, options) {
+    var oContainer = $$(obj), oThis=this, len = 0;
+	
+	this.SetOptions(options);
+	
+	this.Step = Math.abs(this.options.Step);
+	this.Time = Math.abs(this.options.Time);
+	this.Showtext = false;//是否显示说明文本
+	
+	this._list = oContainer.getElementsByTagName(sTag);
+	len = this._list.length;
+	this._count = len;
+	this._width = parseInt(iWidth / len);
+	this._width_max = parseInt(iMaxWidth);
+	this._width_min = parseInt((iWidth - this._width_max) / (len - 1));
+	this._timer = null;
+	
+	//有说明文本
+	if(this.options.TextTag && this.options.TextHeight > 0){
+		this.Showtext = true;
+		this._text = oContainer.getElementsByTagName(this.options.TextTag);
+		this._height_text = -parseInt(this.options.TextHeight);
+	}
+	
+	this.Each(function(oList, oText, i){
+		oList._target = this._width * i;//自定义一个属性放目标left
+		oList.style.left = oList._target + "px";
+		oList.style.position = "absolute";
+		addEventHandler(oList, "mouseover", function(){ oThis.Set.call(oThis, i); });
+		
+		//有说明文本
+		if(oText){
+			oText._target = this._height_text;//自定义一个属性放目标bottom
+			oText.style.bottom = oText._target + "px";
+			oText.style.position = "absolute";
+		}
+	})
+	
+	//容器样式设置
+	oContainer.style.width = iWidth + "px";
+	oContainer.style.overflow = "hidden";
+	oContainer.style.position = "relative";
+	//移出容器时返回默认状态
+	addEventHandler(oContainer, "mouseout", function(e){
+		//变通防止执行oList的mouseout
+		var o = Event(e).relatedTarget;
+		if (oContainer.contains ? !oContainer.contains(o) : oContainer != o && !(oContainer.compareDocumentPosition(o) & 16)) oThis.Set.call(oThis, -1);
+	})
+  },
+  //设置默认属性
+  SetOptions: function(options) {
+    this.options = {//默认值
+		Step:			20,//滑动变化率
+		Time:			20,//滑动延时
+		TextTag:		"",//说明容器tag
+		TextHeight:		0//说明容器高度
+    };
+    Object.extend(this.options, options || {});
+  },
+  //相关设置
+  Set: function(index) {
+	if (index < 0) {
+		//鼠标移出容器返回默认状态
+		this.Each(function(oList, oText, i){ oList._target = this._width * i; if(oText){ oText._target = this._height_text; } })
+	} else {
+		//鼠标移到某个滑动对象上
+		this.Each(function(oList, oText, i){
+			oList._target = (i <= index) ? this._width_min * i : this._width_min * (i - 1) + this._width_max;
+			if(oText){ oText._target = (i == index) ? 0 : this._height_text; }
+		})
+	}
+	this.Move();
+  },
+  //移动
+  Move: function() {
+	clearTimeout(this._timer);
+	var bFinish = true;//是否全部到达目标地址
+	this.Each(function(oList, oText, i){
+		var iNow = parseInt(oList.style.left), iStep = this.GetStep(oList._target, iNow);
+		if (iStep != 0) { bFinish = false; oList.style.left = (iNow + iStep) + "px"; }
+		//有说明文本
+		if (oText) {
+			iNow = parseInt(oText.style.bottom), iStep = this.GetStep(oText._target, iNow);
+			if (iStep != 0) { bFinish = false; oText.style.bottom = (iNow + iStep) + "px"; }
+		}
+	})
+	//未到达目标继续移动
+	if (!bFinish) { var oThis = this; this._timer = setTimeout(function(){ oThis.Move(); }, this.Time); }
+  },
+
+
+  //获取步长
+  GetStep: function(iTarget, iNow) {
+	var iStep = (iTarget - iNow) / this.Step;
+	if (iStep == 0) return 0;
+	if (Math.abs(iStep) < 1) return (iStep > 0 ? 1 : -1);
+	return iStep;
+  },
+  Each:function(fun) {
+	for (var i = 0; i < this._count; i++)
+		fun.call(this, this._list[i], (this.Showtext ? this._text[i] : null), i);
+  }
+};
+
+</script>
+</head>
+<body>
+
+<!--第一栏-->
+<div class="main_visual">
+    <div class="flicking_con">
+	<!-- <a href="javascript:;" class="on"  looyu_bound="1">3</a> -->
+        <a href="javascript:;" class="" looyu_bound="1"   >1</a>
+        <a href="javascript:;" looyu_bound="1"  >2</a>
+		
+    </div>
+    <div class="main_image">
+        <ul>
+			<!-- <li><span class="img_3"></span></li> -->
+            <li><span class="img_1"></span></li>
+            <li><span class="img_2"></span></li>
+        </ul>
+        <a href="javascript:;" id="btn_prev"></a>
+        <a href="javascript:;" id="btn_next"></a>
+    </div>
+</div>
+<div class="b1_3"><img src="images/b1_2.gif" alt="" usemap="#Map5" border="0"/>
+    <map name="Map5" id="Map5">
+        <area shape="rect" coords="15,9,359,49"  href="javascript:;"  />
+        <area shape="rect" coords="402,9,752,48"  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;"  />
+        <area shape="rect" coords="804,7,1117,49"  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;"  />
+    </map>
+</div>
+<!--第二栏原十四栏-->
+<div class="b14_1"><img src="images/cj.png" alt=""/></div>
+<div class="b14_2">
+    <div class="cj">
+        <div id="colee_left0" style="overflow:hidden;width:1202px;">
+            <table cellpadding="0" cellspacing="0" border="0">
+                <tbody><tr>
+                    <td id="colee_left3" valign="top" align="center"><table cellpadding="2" cellspacing="0" border="0">
+                        <tbody><tr align="center">
+                            <td><p><img src="images/c1.jpg" /> </p></td>
+                            <td><p><img src="images/c2.jpg"></p></td>
+                            <td><p><img src="images/c3.jpg" ></p></td>
+                            <td><p><img src="images/c4.jpg" ></p></td>
+                            <td><p><img src="images/c5.jpg"></p></td>
+                            <td><p><img src="images/c6.jpg"></p></td>
+                            <td><p><img src="images/c7.jpg"></p></td>
+                            <td><p><img src="images/c8.jpg"></p></td>
+                            <td><p><img src="images/c9.jpg"></p></td>
+                            <td><p><img src="images/c10.jpg"></p></td>
+                            <td><p><img src="images/c11.jpg"></p></td>
+                            <td><p><img src="images/c12.jpg"></p></td>
+                            <td><p><img src="images/c13.jpg" ></p></td>
+                            <td><p><img src="images/c14.jpg"></p></td>
+                            <td><p><img src="images/c15.jpg"></p></td>
+                            <td><p><img src="images/c16.jpg"></p></td>
+                            <td><p><img src="images/c17.jpg" ></p></td>
+                        </tr>
+                        </tbody></table></td>
+                    <td id="colee_left4" valign="top"><table cellpadding="2" cellspacing="0" border="0">
+                        <tbody><tr align="center">
+                            <td><p><img src="images/c1.jpg" /> </p></td>
+                            <td><p><img src="images/c2.jpg"></p></td>
+                            <td><p><img src="images/c3.jpg" ></p></td>
+                            <td><p><img src="images/c4.jpg" ></p></td>
+                            <td><p><img src="images/c5.jpg"></p></td>
+                            <td><p><img src="images/c6.jpg"></p></td>
+                            <td><p><img src="images/c7.jpg"></p></td>
+                            <td><p><img src="images/c8.jpg"></p></td>
+                            <td><p><img src="images/c9.jpg"></p></td>
+                            <td><p><img src="images/c10.jpg"></p></td>
+                            <td><p><img src="images/c11.jpg"></p></td>
+                            <td><p><img src="images/c12.jpg"></p></td>
+                            <td><p><img src="images/c13.jpg" ></p></td>
+                            <td><p><img src="images/c14.jpg"></p></td>
+                            <td><p><img src="images/c15.jpg"></p></td>
+                            <td><p><img src="images/c16.jpg"></p></td>
+                            <td><p><img src="images/c17.jpg" ></p></td>
+                        </tr>
+                        </tbody></table></td>
+                </tr>
+                </tbody></table>
+        </div>
+        <script>
+            //使用div时，请保证colee_left2与colee_left1是在同一行上.
+            var speed=30//速度数值越大速度越慢
+            var colee_left4=document.getElementById("colee_left4");
+            var colee_left3=document.getElementById("colee_left3");
+            var colee_left0=document.getElementById("colee_left0");
+            colee_left4.innerHTML=colee_left3.innerHTML
+            function Marquee4(){
+                if(colee_left4.offsetWidth-colee_left0.scrollLeft<=0)//offsetWidth 是对象的可见宽度
+                    colee_left0.scrollLeft-=colee_left3.offsetWidth//scrollWidth 是对象的实际内容的宽，不包边线宽度
+                else{
+                    colee_left0.scrollLeft++
+                }
+            }
+            var MyMar4=setInterval(Marquee4,speed)
+            colee_left0.onmouseover=function() {clearInterval(MyMar4)}
+            colee_left0.onmouseout=function() {MyMar4=setInterval(Marquee4,speed)}
+        </script>
+    </div>
+</div>
+<!--第二栏-->
+<div class="b2_1"></div>
+<div class="b2_2"></div>
+<!--第三栏-->
+<div class="b3_1"></div>
+<div class="b3_2"><img src="images/jh5.gif" usemap="#Map9" style="margin-top:200px;" border="0" />
+  <map name="Map9" id="Map9">
+    <area shape="rect" coords="11,9,148,48"  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;"  />
+  </map>
+</div>
+<!--第四栏-->
+<div class="b4"><img src="images/jh6.gif" alt="" usemap="#Map7" border="0"/>
+  <map name="Map7" id="Map7">
+    <area shape="rect" coords="330,389,459,423"  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;"  />
+  </map>
+</div>
+<!--第五栏-->
+<div class="b5"><img src="images/jh8.gif" alt="" usemap="#Map6" border="0"/>
+  <map name="Map6" id="Map6">
+    <area shape="rect" coords="365,266,506,312"  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;"  />
+  </map>
+</div>
+<!--第六栏-->
+<div class="b6">
+    <img src="images/jh9.gif" alt=""/>
+    <img src="images/jh10.gif" alt="" usemap="#Map" border="0"/>
+    <map name="Map" id="Map">
+      <area shape="rect" coords="750,104,867,132"  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;"  />
+      <area shape="rect" coords="525,101,641,133"  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;"  />
+      <area shape="rect" coords="303,99,418,134"  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;"  />
+      <area shape="rect" coords="58,98,176,135"  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;"  />
+      <area shape="rect" coords="994,103,1112,132"  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;"  />
+    </map>
+    <img style=" margin:20px 0 40px" src="images/jh11.gif" alt="" usemap="#Map8" border="0"/>
+    <map name="Map8" id="Map8">
+      <area shape="rect" coords="566,37,683,65"  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;"  />
+    </map>
+</div>
+
+<!--第七栏-->
+<div class="b7">
+     <img src="images/jh13.jpg" alt=""/>
+    <img style=" margin-bottom: 40px" src="images/jh14.jpg" alt=""/>
+</div>
+<!--第八栏-->
+<div class="b8">
+    <div class="cont">
+    <img style="margin-top:20px;" src="images/jh8_1.png" alt=""/>
+    <img src="images/jh8_2.png" alt=""/>
+        <div CLASS="CLEAR"></div>
+        <a  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;" ><img src="images/jh8_3.png" alt=""/></a>
+    </div>
+</div>
+<!--第九栏-->
+<div class="b9">
+    <img src="images/jh16.gif" alt=""/>
+    <div class="tc">
+
+            <ul>
+                <li><img src="images/tc3.png" alt=""/>
+                <p class="name">刘老师</p>
+                    <div class="defalut">
+                        <p>前面试项目总监</p>
+                        <p>面试核心团队创始人</p>
+                    </div>
+                    <div class="zs">
+                        <p>嘉禾博研商学院提前面试项目总监，面试核心团队创始人，专注MBA培训多年，针对多所MBA商学院面试有着深入的研究</p>
+                    </div>
+                </li>
+                <li><img src="images/tc4.png" alt=""/>
+                    <p class="name">董老师</p>
+                    <div class="defalut">
+                        <p>北大MBA</p>
+                        <p>百度高级经理</p>
+                    </div>
+                    <div class="zs">
+                        <p>嘉禾博研商学院独家御聘面试专家，多家商学院面试导师，专注压力面试研究，培训多位名校MBA</p>
+                    </div>
+                </li>
+                <li><img src="images/tc5.png" alt=""/>
+                    <p class="name">解龙骥</p>
+                    <div class="defalut">
+                        <p>清华大学MBA</p>
+                        <p>首席面试专家</p>
+                    </div>
+                    <div class="zs">
+                        <p>华泽集团公共关系总监，嘉禾博研商学院首席面试专家，专注清华和北大MBA培训，针对面试沟通有着独到的见解</p>
+                    </div>
+                </li>
+                <li><img src="images/tc6.png" alt=""/>
+                    <p class="name">马昕</p>
+                    <div class="defalut">
+                        <p>人大MBA</p>
+                        <p>首席面试专家</p>
+                    </div>
+                    <div class="zs">
+                        <p>人大MBA，嘉禾博研商学院首席面试专家,专注人大MBA研究，知名外企人力资源总监，专注MBA面试礼仪研究和面试沟通.</p>
+                    </div>
+                </li>
+                <li><img src="images/tc7.png" alt=""/>
+                    <p class="name">魏建荣</p>
+                    <div class="defalut">
+                        <p>面试团队核心成员</p>
+                        <p>央企人力资源处处长</p>
+                    </div>
+                    <div class="zs">
+                        <p>面试团队核心成员，央企人力资源处处长，专注清华北大人大MBA面试多年，辅导近千名MBA学生成功圆了名校梦。</p>
+                    </div>
+                </li>
+                <li><img src="images/tc8.png" alt=""/>
+                    <p class="name">陈山发</p>
+                    <div class="defalut">
+                        <p>清华大学MBA</p>
+                        <p>首席面试专家</p>
+                    </div>
+                    <div class="zs">
+                        <p>华能集团财务总监，嘉禾博研商学院首席面试专家，专注清北人MBA面试培训多年，成功辅导多名学生进入清华和北大</p>
+                    </div>
+                </li>
+                <li><img src="images/tc9.png" alt=""/>
+                    <p class="name">张老师</p>
+                    <div class="defalut">
+                        <p>人大MBA</p>
+                        <p>MBA首席面试考官</p>
+                    </div>
+                    <div class="zs">
+                        <p>人大EMBA中心主任，多所商学院客座教授，主讲管理沟通学，辅导多名学生成功进入清华和北大</p>
+                    </div>
+                </li>
+                <li><img src="images/tc10.png" alt=""/>
+                    <p class="name">吴松</p>
+                    <div class="defalut">
+                        <p>人大MBA</p>
+                        <p>面试组首席面试考官</p>
+                    </div>
+                    <div class="zs">
+                        <p>人大MBA，埃森哲高级咨询顾问，嘉禾博研商学院人大面试组首席面试考官，专注MBA面试研究多年</p>
+                    </div>
+                </li>
+            </ul>
+
+    </div>
+    <img src="images/tc_b.jpg" usemap="#Map2" border="0">
+    <map name="Map2" id="Map2">
+      <area shape="rect" coords="407,10,530,44"  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;"  />
+      <area shape="rect" coords="659,9,774,43"  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;"  />
+    </map>
+
+</div>
+<!--第十栏-->
+<div class="b10">
+    <div class="tc1 clearfix">
+        <ul>
+        <a  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;" > <li><img src="images/t3.jpg" alt=""/>
+              
+           <p class="name clearfix"><span class="fl">周远飞</span><span class="fr">首席讲师</span></p>
+                <p class="intro">官方机工社数学主编，中国教育在线商学院嘉宾，出版《管理类联考数学满分攻略宝……</p>
+            </li></a>
+           <a  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;" > <li><img src="images/t9.jpg" alt=""/>
+                <p class="name clearfix"><span class="fl">陈慕泽</span><span class="fr">命题中心</span></p>
+                <p class="intro">独家授课老师，逻辑思路清晰到位，讲解一针见血，具备很好的授课能力，尤其针对……</p>
+            </li></a>
+            <a  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;" ><li><img src="images/t10.jpg" alt=""/>
+                <p class="name clearfix"><span class="fl">齐辙</span><span class="fr">独家讲师</span></p>
+                <p class="intro">全国英语命题组成员，首席英语讲师，讲课幽默生动，历年命中率最高，被全国的备……</p>
+            </li></a>
+           <a  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;" > <li><img src="images/t1.jpg" alt=""/>
+              <p class="name clearfix"><span class="fl">龙辉</span><span class="fr">英语教研组组长</span></p>
+                <p class="intro">擅长词汇，阅读和写作，讲解英语手到擒来，英语精辟到位，深受全国MBA考生膜……</p>
+            </li></a>
+          <a  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;" > <li><img src="images/t5.jpg" alt=""/>
+            <p class="name clearfix"><span class="fl">莫修明</span><span class="fr">命题研究组长</span></p>
+            <p class="intro">数学教授，多年的MBA数学教学让莫老师已经被全国的MBA考生称之为“数学绝杀王……</p>
+        </li></a>
+          <a  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;" > <li><img src="images/t7.jpg" alt=""/>
+                <p class="name clearfix"><span class="fl">郑涛</span><span class="fr">数学教研组</span></p>
+                <p class="intro">机械工业出版社多部著作副主编，数学讲解精炼易懂，实战派老师，MBA考试数学满……</p>
+            </li></a>
+          <a  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;" ><li><img src="images/t4.jpg" alt=""/>
+                <p class="name clearfix"><span class="fl">刘玉芳</span><span class="fr">核心成员</span></p>
+                <p class="intro">逻辑命题研究组组长，参编多部逻辑著作，针对逻辑讲解独到，有着“逻辑一姐”之……</p>
+            </li></a>
+            <a  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;" > <li><img src="images/t2.jpg" alt=""/>
+                <p class="name clearfix"><span class="fl">胡昊</span><span class="fr">语文教研组组长</span></p>
+                <p class="intro">针对论说文和论证有效性分析固定模板讲解很有研究，直接命中2014年MBA语文考试……</p>
+            </li></a>
+            <a  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;" ><li><img src="images/t6.jpg" alt=""/>
+                <p class="name clearfix"><span class="fl">熊丽丽</span><span class="fr">独家签约</span></p>
+                <p class="intro">英语专八，针对考研英语有着独到的见解和技巧，帮助无数零基础考生成功圆梦MBA……</p>
+            </li></a>
+       
+            <a  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;" ><li><img src="images/t8.jpg" alt=""/>
+                <p class="name clearfix"><span class="fl">李建福</span><span class="fr">首席讲师</span></p>
+                <p class="intro">嘉禾博研数学教研团队核心成员，专注MBA数学多年，有着丰富的经验，很强的实战……</p>
+            </li></a>
+            
+            
+      </ul>
+    </div>
+    <img src="images/jh18.jpg" alt=""/>
+</div>
+<!--书-->
+<div class="b11">
+<img src="images/jh19.gif">
+<div class="book" >
+<div id="colee_left" style="overflow:hidden;width:1202px;">
+          <table cellpadding="0" cellspacing="0" border="0">
+            <tbody><tr>
+              <td id="colee_left1" valign="top" align="center"><table cellpadding="2" cellspacing="0" border="0">
+                  <tbody><tr align="center">
+                    <td><p><img src="images/no1-1.jpg" looyu_bound="1" style="cursor: pointer;"></p></td>
+                    <td><p><img src="images/no1-2.jpg" looyu_bound="1" style="cursor: pointer;"></p></td>
+                    <td><p><img src="images/no1-3.jpg" looyu_bound="1" style="cursor: pointer;"></p></td>
+                    <td><p><img src="images/no1-4.jpg" looyu_bound="1" style="cursor: pointer;"></p></td>
+                    <td><p><img src="images/no1-5.jpg"></p></td>
+                    <td><p><img src="images/no1-6.jpg"></p></td>
+                    <td><p><img src="images/no1-7.jpg"></p></td>
+                    <td><p><img src="images/no1-8.jpg"></p></td>
+                    <td><p><img src="images/no1-9.jpg"></p></td>
+                    <td><p><img src="images/no1-10.jpg"></p></td>
+                    <td><p><img src="images/no1-11.jpg"></p></td>
+                    <td><p><img src="images/no1-12.jpg"></p></td>
+                    <td><p><img src="images/no1-13.jpg" looyu_bound="1" style="cursor: pointer;"></p></td>
+                  </tr>
+              </tbody></table></td>
+              <td id="colee_left2" valign="top"><table cellpadding="2" cellspacing="0" border="0">
+                  <tbody><tr align="center">
+                    <td><p><img src="images/no1-1.jpg" looyu_bound="1" style="cursor: pointer;"></p></td>
+                    <td><p><img src="images/no1-2.jpg" looyu_bound="1" style="cursor: pointer;"></p></td>
+                    <td><p><img src="images/no1-3.jpg" looyu_bound="1" style="cursor: pointer;"></p></td>
+                    <td><p><img src="images/no1-4.jpg" looyu_bound="1" style="cursor: pointer;"></p></td>
+                    <td><p><img src="images/no1-5.jpg"></p></td>
+                    <td><p><img src="images/no1-6.jpg"></p></td>
+                    <td><p><img src="images/no1-7.jpg"></p></td>
+                    <td><p><img src="images/no1-8.jpg"></p></td>
+                    <td><p><img src="images/no1-9.jpg"></p></td>
+                    <td><p><img src="images/no1-10.jpg"></p></td>
+                    <td><p><img src="images/no1-11.jpg"></p></td>
+                    <td><p><img src="images/no1-12.jpg"></p></td>
+                    <td><p><img src="images/no1-13.jpg" looyu_bound="1" style="cursor: pointer;"></p></td>
+                  </tr>
+              </tbody></table></td>
+            </tr>
+          </tbody></table>
+        </div>
+ <script>
+//使用div时，请保证colee_left2与colee_left1是在同一行上.
+var speed=30//速度数值越大速度越慢
+var colee_left2=document.getElementById("colee_left2");
+var colee_left1=document.getElementById("colee_left1");
+var colee_left=document.getElementById("colee_left");
+colee_left2.innerHTML=colee_left1.innerHTML
+function Marquee3(){
+if(colee_left2.offsetWidth-colee_left.scrollLeft<=0)//offsetWidth 是对象的可见宽度
+colee_left.scrollLeft-=colee_left1.offsetWidth//scrollWidth 是对象的实际内容的宽，不包边线宽度
+else{
+colee_left.scrollLeft++
+}
+}
+var MyMar3=setInterval(Marquee3,speed)
+colee_left.onmouseover=function() {clearInterval(MyMar3)}
+colee_left.onmouseout=function() {MyMar3=setInterval(Marquee3,speed)}
+  </script>
+  <div class="clear"></div>
+  </div>
+    <a  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;" ><img class="tel" src="images/jh20.gif"></a>
+</div>
+<!--第十二栏-->
+<div class="b12">
+<div class="bf">
+
+<!--上课实景照片-->
+<div id="idGlideView">
+  <div> <img src="images/11.jpg" /></div>
+<div> <img src="images/22.jpg" />   </div>
+<div> <img src="images/33.jpg" /></div>
+  <div> <img src="images/44.jpg" />  </div>
+  <div> <img src="images/55.jpg" />  </div>
+  <div> <img src="images/66.jpg" />  </div>
+  <div> <img src="images/77.jpg" />  </div>
+  <div> <img src="images/88.jpg" />  </div>
+  <div> <img src="images/99.jpg" />  </div>
+  <div> <img src="images/1010.jpg" />  </div>
+  <div> <img src="images/1111.jpg" />  </div>
+  <div> <img src="images/1212.jpg" />  </div>
+  <div> <img src="images/1313.jpg" />  </div>
+  <div> <img src="images/1414.jpg" />  </div>
+  <div> <img src="images/1515.jpg" />  </div>
+  <div> <img src="images/1616.jpg" />  </div>
+  <div> <img src="images/1717.jpg" />  </div>
+  <div> <img src="images/1818.jpg" />  </div>
+  <div> <img src="images/1919.jpg" />  </div>
+  <div> <img src="images/2020.jpg" />  </div>
+  </div>
+
+<SCRIPT>
+
+var gv = new GlideView("idGlideView", 1202, "div", 533, { TextTag: "a", TextHeight: 0 });
+var oSel = $$("sel");
+for (var i = 0; i <= gv._count; i++) {
+	var op = document.createElement("OPTION");
+	op.value = i; op.innerHTML = "展开第" + (i + 1) + "个";
+	oSel.appendChild(op);
+}
+oSel.onchange = function(){ gv.Set(oSel.value); }
+
+
+var t = null, i = -1;
+$$("auto").onclick = function(){ clearInterval(t);t=setInterval(function(){ if(++i>gv._count) i=0; gv.Set(i); }, 1000); };
+$$("cancel").onclick = function(){ clearInterval(t);gv.Set(-1); };
+</SCRIPT>
+
+
+
+
+
+</div>
+
+    <div CLASS="CLEAR"></div>
+    <a  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;" > <img src="images/jh23.gif"></a>
+</div>
+<!--第十三栏-->
+<div class="b13">
+<div class="cont">
+    <img src="images/jh24.gif" alt="" usemap="#Map3" border="0"/>
+    <map name="Map3" id="Map3">
+      <area shape="rect" coords="551,332,724,374"  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;"  />
+    </map>
+    <img src="images/jh25.gif" alt="" usemap="#Map10" border="0"/>
+    <map name="Map10" id="Map10">
+      <area shape="rect" coords="738,11,916,238"  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;"  />
+    </map>
+    </div>
+</div>
+
+<!--第十五栏-->
+<div class="b15">
+    <img src="images/jh27.jpg" alt="" usemap="#Map4" border="0"/>
+    <map name="Map4" id="Map4">
+      <area shape="rect" coords="435,349,571,390"  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;"  />
+      <area shape="rect" coords="234,346,371,390"  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;"  />
+      <area shape="rect" coords="635,348,771,392"  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;"  />
+      <area shape="rect" coords="832,349,968,391"  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;"  />
+      <area shape="rect" coords="1033,347,1169,391"  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;"  />
+<area shape="rect" coords="33,346,171,392"  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;"  />
+      <area shape="rect" coords="522,442,679,470"  href="javascript:;" onclick="doyoo.util.openChat();doyoo.util.accept();return false;"  />
+    </map>
+</div>
+<!--第十六栏-->
+<div class="b16">
+<div class="cont">
+    <img src="images/jh28.gif" alt=""/>
+    <img src="images/jh29.jpg" alt=""/>
+    <div class="clear"></div>
+    <img src="images/jh30.gif" alt=""/>
+</div>
+</div>
+<!--右侧漂浮开始-->
+<script>
+lastScrollY=0;
+function heartBeat(){
+ diffY=document.documentElement.scrollTop;
+ percent=0.5*(diffY-lastScrollY);
+ if(percent>0)
+  percent=Math.ceil(percent);
+ else 
+  percent=Math.floor(percent);
+ var f1=document.getElementById('forward1');
+ f1.style.pixelTop+=percent;
+ lastScrollY=lastScrollY+percent;
+}
+window.setInterval("heartBeat()",20);
+</script>
+</td>
+<!-- 右侧漂浮结束 -->
+
+<!--51啦统计-->
+     <div style="display: none">
+<script language="javascript" type="text/javascript" src="http://js.users.51.la/15155776.js"></script>
+<noscript><a href="http://www.51.la/?15155776" target="_blank"><img alt="&#x6211;&#x8981;&#x5566;&#x514D;&#x8D39;&#x7EDF;&#x8BA1;" src="http://img.users.51.la/15155776.asp" style="border:none" /></a></noscript>
+</div>
+
+		
+		
+		
+<script type="text/javascript" charset="utf-8" src="http://gate.looyu.com/46258/107590.js"></script>
+
+<script language="JavaScript" src="http://www6.dianji007.com/bls/srv/s?uid=11097142738&sty=4"></script>	
+	
+ <!--cj-->
+      <script src="new.js" language="JavaScript"></script>
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F5a1638eba8474fcbb01f2bf73ca18795' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+</body>
+</html>

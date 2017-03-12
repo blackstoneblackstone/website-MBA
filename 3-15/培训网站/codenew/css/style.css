@@ -1,0 +1,322 @@
+body {
+    margin: 0px;
+    font-family: "Microsoft YaHei", 微软雅黑, "MicrosoftJhengHei", 华文细黑, STHeiti, MingLiu;
+}
+
+.content {
+    width: 100%;
+}
+.hidden{
+    display: none;
+}
+.chanal-0 {
+  text-align: center;
+}
+img{
+    width: 100%;
+}
+.c0-bg{
+    width: 100%;
+}
+.c0-items {
+    height: 110px;
+}
+.c0-2-text{
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+    width: 90%;
+}
+/*.c0-m2-btn{*/
+    /*position: absolute;*/
+    /*right: 400px;*/
+    /*bottom: 100px;*/
+    /*height: 50px;*/
+    /*width: 150px;*/
+    /*border: solid #fff001 2px;*/
+    /*font-size: 18px;*/
+    /*background-color: rgba(255,255,255,0);*/
+    /*color: red;*/
+    /*border-radius: 10%;*/
+/*}*/
+.c0-m2{
+    background: url(../img/c0-2-bg.png) repeat;
+    padding: 20px;
+}
+.c0-item {
+    float: left;
+    width: 33.2%;
+    text-align: center;
+    line-height: 30px;
+    font-size: 18px;
+    height: 90px;
+    cursor: pointer;
+    padding-top: 20px;
+}
+
+.c0-item:hover {
+    background-color: #cccccc;
+}
+
+.c0-item-1 {
+    border-right: solid #cccccc 2px;
+    color: #d93045;
+}
+
+.c0-item-2 {
+    border-right: solid #cccccc 2px;
+    color: #5040a8;
+}
+
+.c0-item-3 {
+    color: #11a1f2;
+}
+
+/*.c0-d1-i1{*/
+/*position: absolute;*/
+/*}*/
+/*.c0-d1-g{*/
+/*position: absolute;*/
+/*z-index: 10;*/
+/*}*/
+.chanal-1 {
+    background: url(../img/c1-bg.gif) repeat;
+    text-align: center;
+    width: 100%;
+}
+
+.c1-d1 {
+    width: 100%;
+    text-align: center;
+}
+.c1-d2{
+    width:80%;
+    margin: 50px auto 50px auto;
+}
+.c1-bottom{
+    width: 100%;
+}
+.c1-text {
+    width: 80%;
+    margin: 100px auto 0px auto;
+}
+
+.c2-d1 {
+    width: 100%;
+    text-align: center;
+}
+
+.c2-text {
+    width: 80%;
+    margin: 20px auto 0px auto;
+}
+
+.chanal-3 {
+    background-color: #d93045;
+    text-align: center;
+}
+
+.c3-text {
+    width: 80%;
+    margin: 80px auto 80px auto;
+}
+
+.c2-d2 {
+    width: 80%;
+    margin: 10px auto 10px auto;
+}
+
+.c2-d2 img {
+    width: 24%;
+    margin-left: 1%;
+}
+
+.chanal-4 {
+    width: 100%;
+    text-align: center;
+    background-color: #2a2056;
+}
+
+.c4-text {
+    margin: 50px auto 30px auto;
+    width: 60%;
+}
+
+.c4-d2 {
+    width: 80%;
+    margin: 10px auto 30px auto;
+    padding-bottom: 30px;
+}
+
+.c4-d2 img {
+    width: 20%;
+    margin-bottom: 40px;
+    padding-right: 2%;
+    padding-left: 2%;
+    cursor: pointer;
+}
+
+.c4-d3 {
+    height: 50px;
+    background-color: #205bb8;
+}
+
+.c4-d3 span {
+    line-height: 50px;
+    font-size: 18px;
+    width: 15%;
+    margin-left: 3%;
+    color: #ffffff;
+}
+
+.chanal-5 {
+    width: 100%;
+    text-align: center;
+}
+
+.c5-d0 {
+    width: 100%;
+    background: url(../img/c5-bg.png) repeat;
+    padding-bottom: 30px;
+}
+
+.c5-d1 {
+    margin: 80px auto 0px auto;
+    width: 70%;
+}
+
+.c5-d2 {
+    margin: 80px auto 0px auto;
+    width: 70%;
+    padding-bottom: 30px;
+}
+
+.c5-d3 {
+    width: 100%;
+    background: url(../img/c5-bg.png) repeat;
+    padding-bottom: 50px;
+}
+
+.c5-d3 img {
+    margin: 80px auto 0px auto;
+    width: 70%;
+}
+
+.c5-d4 {
+    width: 70%;
+    margin: 80px auto 0px auto;
+    padding-bottom: 60px;
+}
+
+.chanal-6 {
+    width: 100%;
+    text-align: center;
+    background: url(../img/c6-bg.png) repeat;
+}
+
+.c6-text {
+    width: 80%;
+    margin: 0px auto 0px auto;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    cursor: pointer;
+}
+
+.t1-btn {
+    height: 50px;
+    width: 150px;
+    border: solid #f92772 2px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #f92772;
+    font-size: 20px;
+    margin-top: 30px;
+}
+
+.t2-btn {
+    height: 50px;
+    width: 150px;
+    border: solid #ff8400 2px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #ff8400;
+    font-size: 20px;
+    margin-top: 30px;
+}
+
+.t3-btn {
+    height: 50px;
+    width: 150px;
+    border: solid #4ecb99 2px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #4ecb99;
+    font-size: 20px;
+    margin-top: 30px;
+}
+
+.t4-btn {
+    height: 50px;
+    width: 150px;
+    border: solid #303441 2px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #303441;
+    font-size: 20px;
+    margin-top: 30px;
+}
+button{
+    cursor: pointer;
+}
+button:hover {
+    background-color: yellow;
+}
+
+/*主要用来美化样式*/
+#scrollpic {
+    position: relative;
+    height: 300px;
+    /*width: 920px;*/
+    overflow: hidden;
+}
+
+#prev, #next {
+    display: block;
+    height: 300px;
+    width: 250px;
+    background: #fff;
+    position: absolute;
+    top: 0;
+    opacity: 0;
+    z-index: 10;
+}
+
+#prev {
+    left: 0;
+}
+
+#next {
+    right: 0;
+}
+
+#scrollpic ul {
+    position: absolute;
+    height: 300px;
+}
+
+#scrollpic ul li {
+    float: left;
+    padding: 5px;
+    height: 300px;
+    width: 220px;
+}
+
+#scrollpic ul li img {
+    width: 220px;
+    height: 300px;
+}
+
+p {
+    font: normal 14px/2 'microsoft yahei';
+    color: #333;
+}

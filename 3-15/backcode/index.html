@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>嘉禾博研商学院</title>
+	<link rel="stylesheet" type="text/css" href="css/animate.css"/>
+	<link rel="stylesheet" type="text/css" href="css/style.css"/>
+</head>
+
+<body>
+<div id="content" class="content">
+	<div class="chanal-0 animated slideInDown">
+		<img src="img/c0.png">
+	</div>
+	<div class="chanal-1">
+		<img src="img/c1.png">
+	</div>
+	<!--<div class="chanal-2">-->
+	<!--<img src="img/c2.png">-->
+	<!--</div>-->
+	<!--<div class="chanal-3">-->
+	<!--<img src="img/c3.png">-->
+	<!--</div>-->
+	<!--<div class="chanal-4">-->
+	<!--<img src="img/c4.png">-->
+	<!--</div>-->
+	<!--<div class="chanal-5">-->
+	<!--<img src="img/c5.png">-->
+	<!--</div>-->
+	<!--<div class="chanal-6">-->
+	<!--<img src="img/c6.png">-->
+	<!--</div>-->
+	<!--<div class="chanal-7">-->
+	<!--<img src="img/c7.png">-->
+	<!--</div>-->
+</div>
+</body>
+<!--右侧漂浮开始-->
+<!--<script type="text/javascript" charset="utf-8" src="http://gate.looyu.com/46258/107590.js"></script>-->
+<!--右侧漂浮end-->
+<script type="text/javascript">
+	
+	//设置滚动加载
+	window.onscroll = function () {
+		if (getCheck()) {
+			var chanal = document.createElement("div");
+			var chanalImg = document.createElement("img");
+			var content = document.getElementById('content');
+			console.log(getLastChild(content).className);
+			if (getLastChild(content).className == "chanal-1") {
+				chanal.className = "chanal-2";
+				chanalImg.src = "img/c2.png";
+				chanal.appendChild(chanalImg);
+				content.appendChild(chanal);
+				return;
+			}
+			if (getLastChild(content).className == "chanal-2") {
+				chanal.className = "chanal-3";
+				chanalImg.src = "img/c3.png";
+				chanal.appendChild(chanalImg);
+				content.appendChild(chanal);
+				return;
+			}
+			if (getLastChild(content).className == "chanal-3") {
+				chanal.className = "chanal-4";
+				chanalImg.src = "img/c4.png";
+				chanal.appendChild(chanalImg);
+				content.appendChild(chanal);
+				return;
+			}
+			if (getLastChild(content).className == "chanal-4") {
+				chanal.className = "chanal-5";
+				chanalImg.src = "img/c5.png";
+				chanal.appendChild(chanalImg);
+				content.appendChild(chanal);
+				return;
+			}
+			if (getLastChild(content).className == "chanal-5") {
+				chanal.className = "chanal-6";
+				chanalImg.src = "img/c6.png";
+				chanal.appendChild(chanalImg);
+				content.appendChild(chanal);
+				return;
+			}
+			if (getLastChild(content).className == "chanal-6") {
+				chanal.className = "chanal-7";
+				chanalImg.src = "img/c7.png";
+				chanal.appendChild(chanalImg);
+				content.appendChild(chanal);
+				return;
+			}
+
+		}
+	}
+
+	/**
+	 * 数据请求检验
+	 */
+	function getCheck() {
+		var documentH = document.documentElement.clientHeight;
+		var scrollH = document.documentElement.scrollTop || document.body.scrollTop;
+//		console.log(documentH);
+//		console.log(scrollH);
+//		console.log(getLastH());
+		return documentH + scrollH >= getLastH() ? true : false;
+	}
+	/**
+	 * 获得content所在的高度
+	 */
+	function getLastH() {
+		var content = document.getElementById('content');
+		return content.offsetTop + content.offsetHeight;
+	}
+
+	function getLastChild(n) {
+		var x = n.lastChild;
+		while (x.nodeType != 1) {
+			x = x.previousSibling;
+		}
+		return x;
+	}
+
+
+</script>
+</html>

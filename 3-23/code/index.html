@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta charset="UTF-8">
+	<title>嘉禾博研商学院</title>
+	<link href="css/animate.css" rel="stylesheet" type="text/css">
+	<link href="css/index.css" rel="stylesheet" type="text/css">
+	<script src="js/jquery.min.js" type="text/javascript"></script>
+	<script src="js/jquery.scrollstop.min.js" type="text/javascript"></script>
+	<script src="js/jquery.lazyload.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="http://pingjs.qq.com/h5/stats.js" name="MTAH5" sid="500041194"></script>
+	<script>
+		$(function () {
+			$("img").lazyload({
+				effect: "fadeIn",
+				event: "scrollstop"
+			});
+//		$(window).bind("load", function () {
+//			var timeout = setTimeout(function () {
+//				$("img").trigger("sporty")
+//			}, 5000);
+//		});
+
+			$(".yy-click").click(function () {
+				doyoo.util.openChat();
+				doyoo.util.accept();
+				return false;
+			});
+			setInterval(function(){
+				$("img").each(function(){
+					$(this).attr("src",$(this).attr("data-original"));
+				});
+				$("#doyoo_f_frame").hide();
+				$("html").css("overflow","auto");
+				$("body").css("overflow","auto");
+			},5000);
+		});
+	</script>
+</head>
+<body>
+<div class="channel channel-1">
+	<img class="c1-text animated fadeInDown" src="img/c1-text.png">
+
+	<div class="c1-bottom">
+		<img src="img/c1-t1.png" class="yy-click animated fadeIn infinite slow">
+		<img src="img/c1-t2.png" class="yy-click animated fadeIn infinite slow">
+		<img src="img/c1-t3.png" class="yy-click animated fadeIn infinite slow">
+		<img src="img/c1-t4.png" class="yy-click animated fadeIn infinite slow">
+		<img src="img/c1-t5.png" class="yy-click animated fadeIn infinite slow">
+	</div>
+	<div class="c1-list">
+		<span class="yy-click">MBA商学院考前培训指定机构</span>
+		<span class="yy-click">MBA成功学员推荐率突破87.6%</span>
+		<span class="yy-click">名校MBA提前面试考官占比76.9%</span>
+		<span class="yy-click">MEM名校独家合作机构</span>
+	</div>
+</div>
+<div class="channel channel-2">
+	<img class="c2-text" src="img/c2-text.png">
+
+	<div class="c2-mid" id="scrollpic">
+		<ul>
+			<li class="yy-click"><img data-original="img/c2/1.jpg"></li>
+			<li class="yy-click"><img data-original="img/c2/2.jpg"></li>
+			<li class="yy-click"><img data-original="img/c2/3.jpg"></li>
+			<li class="yy-click"><img data-original="img/c2/4.jpg"></li>
+			<li class="yy-click"><img data-original="img/c2/5.jpg"></li>
+			<li class="yy-click"><img data-original="img/c2/6.jpg"></li>
+			<li class="yy-click"><img data-original="img/c2/7.jpg"></li>
+			<li class="yy-click"><img data-original="img/c2/8.jpg"></li>
+			<li class="yy-click"><img data-original="img/c2/9.jpg"></li>
+			<li class="yy-click"><img data-original="img/c2/10.jpg"></li>
+			<li class="yy-click"><img data-original="img/c2/11.jpg"></li>
+		</ul>
+	</div>
+	<script type="text/javascript">
+		//操作dom
+		var oPicList = document.getElementById("scrollpic");
+		var oUl = oPicList.getElementsByTagName("ul")[0];
+		var aLi = oUl.getElementsByTagName("li");
+		oUl.innerHTML += oUl.innerHTML;
+		oUl.style.width = aLi[0].offsetWidth * aLi.length + "px";
+		oUl.style.left = -oUl.offsetWidth / 2;
+		var speed = -1;
+		//控制滚动
+		function movePic() {
+			if (oUl.offsetLeft <= -oUl.offsetWidth / 2) {
+				oUl.style.left = "0";
+			}
+			if (oUl.offsetLeft > 0) {
+				oUl.style.left = -oUl.offsetWidth / 2;
+			}
+			oUl.style.left = oUl.offsetLeft + speed + "px";
+		}
+
+		var timer = setInterval(movePic, 30);
+		//鼠标操作 暂停/滚动
+		oUl.onmouseover = function () {
+			clearInterval(timer);
+		}
+		oUl.onmouseout = function () {
+			timer = setInterval(movePic, 30);
+		}
+	</script>
+</div>
+<div class="channel channel-3">
+	<img class="c3-top" data-original="img/c3-text.png">
+
+	<div class="c3-mid">
+		<img class="yy-click  animated fadeIn" data-original="img/c3-i1.png">
+		<img class="yy-click  animated fadeIn" data-original="img/c3-i2.png">
+		<img class="yy-click  animated fadeIn" data-original="img/c3-i3.png">
+		<img class="yy-click  animated fadeIn" data-original="img/c3-i4.png">
+		<img class="yy-click  animated fadeIn" data-original="img/c3-i5.png">
+		<img class="yy-click  animated fadeIn" data-original="img/c3-i6.png">
+		<img class="yy-click  animated fadeIn" data-original="img/c3-i7.png">
+		<img class="yy-click  animated fadeIn" data-original="img/c3-i8.png">
+		<img class="yy-click  animated fadeIn" data-original="img/c3-i9.png">
+		<img class="yy-click  animated fadeIn" data-original="img/c3-i10.png">
+		<img class="yy-click  animated fadeIn" data-original="img/c3-i11.png">
+		<img class="yy-click  animated fadeIn" data-original="img/c3-i12.png">
+
+		<div class="clear"></div>
+	</div>
+
+</div>
+<div class="channel channel-4">
+	<img class="c4-text" data-original="img/c4-bg.png">
+
+	<div class="c4">
+		<div class="c4-mid">
+			<ul>
+				<li>
+					<img class="yy-click" data-original="img/c4-btn1.png">
+					<p>获得全日制国家研究生学历和学位</p>
+				</li>
+				<li><img class="yy-click" data-original="img/c4-btn2.png">
+					<p>成功落户北京，解决孩子入学和买房问题</p>
+				</li>
+				<li><img class="yy-click" data-original="img/c4-btn3.png">
+					<p>成功实现了工资收入100%-150%的大幅度增长，进入白领阶层</p>
+				</li>
+				<li><img class="yy-click" data-original="img/c4-btn4.png">
+					<p>建立一整套管理系统，标准的精益化管理流程</p>
+				</li>
+				<li><img class="yy-click" data-original="img/c4-btn5.png">
+					<p>获得来至于导师和校友的大平台资源对接，融资创业更便捷</p>
+				</li>
+			</ul>
+			<div class="clear"></div>
+			<img class="c4-btn yy-click" data-original="img/c4-btn.png">
+		</div>
+
+	</div>
+
+</div>
+<div class="channel channel-5">
+	<img class="c5-text" data-original="img/c5-text.png">
+</div>
+<div class="channel channel-6  yy-click">
+	<img class="c6-top" data-original="img/c6-top.png">
+	<img class="c6-mid" data-original="img/c6-mid.png">
+</div>
+<div class="channel channel-7">
+	<img class="c7-top" data-original="img/c7-top.png">
+	<img class="c7-t c7-t1" data-original="img/c7-t1.png">
+
+	<div class="clear"></div>
+	<div class="c7-i1">
+		<ul>
+			<li class="yy-click">
+				<img data-original="img/t3.jpg">
+
+				<p class="name">
+					<span class="fl">周远飞</span>
+					<span class="fr">首席讲师</span>
+				</p>
+
+				<p class="intro">
+					官方机工社数学主编，中国教育在线商学院嘉宾，出版《管理类联考数学满分攻略宝……
+				</p>
+			</li>
+			<li class="yy-click">
+				<img data-original="img/t9.jpg">
+
+				<p class="name"><span class="fl">陈慕泽</span>
+					<span class="fr">命题中心</span></p>
+
+				<p class="intro">独家授课老师，逻辑思路清晰到位，讲解一针见血，具备很好的授课能力，尤其针对……</p>
+			</li>
+			<li class="yy-click"><img data-original="img/t10.jpg">
+
+				<p class="name"><span class="fl">齐辙</span><span class="fr">独家讲师</span></p>
+
+				<p class="intro">全国英语命题组成员，首席英语讲师，讲课幽默生动，历年命中率最高，被全国的备……</p>
+			</li>
+			<li class="yy-click"><img data-original="img/t1.jpg">
+
+				<p class="name"><span class="fl">龙辉</span><span class="fr">英语教研组组长</span></p>
+
+				<p class="intro">擅长词汇，阅读和写作，讲解英语手到擒来，英语精辟到位，深受全国MBA考生膜……</p>
+			</li>
+			<li class="yy-click"><img data-original="img/t5.jpg">
+
+				<p class="name"><span class="fl">莫修明</span><span class="fr">命题研究组长</span></p>
+
+				<p class="intro">数学教授，多年的MBA数学教学让莫老师已经被全国的MBA考生称之为“数学绝杀王……</p>
+			</li>
+			<li class="yy-click"><img data-original="img/t7.jpg">
+
+				<p class="name"><span class="fl">郑涛</span><span class="fr">数学教研组</span></p>
+
+				<p class="intro">机械工业出版社多部著作副主编，数学讲解精炼易懂，实战派老师，MBA考试数学满……</p>
+			</li>
+			<li class="yy-click"><img data-original="img/t4.jpg">
+
+				<p class="name"><span class="fl">刘玉芳</span><span class="fr">核心成员</span></p>
+
+				<p class="intro">逻辑命题研究组组长，参编多部逻辑著作，针对逻辑讲解独到，有着“逻辑一姐”之……</p>
+			</li>
+			<li class="yy-click"><img data-original="img/t2.jpg">
+
+				<p class="name"><span class="fl">胡昊</span><span class="fr">语文教研组组长</span></p>
+
+				<p class="intro">针对论说文和论证有效性分析固定模板讲解很有研究，直接命中2014年MBA语文考试……</p>
+			</li>
+			<li class="yy-click"><img data-original="img/t6.jpg">
+
+				<p class="name"><span class="fl">李橙</span><span class="fr">独家签约</span></p>
+
+				<p class="intro">英语专八，针对考研英语有着独到的见解和技巧，帮助无数零基础考生成功圆梦MBA……</p>
+			</li>
+			<li class="yy-click"><img data-original="img/t8.jpg">
+
+				<p class="name"><span class="fl">李建福</span><span class="fr">首席讲师</span></p>
+
+				<p class="intro">嘉禾博研数学教研团队核心成员，专注MBA数学多年，有着丰富的经验，很强的实战……</p>
+			</li>
+		</ul>
+		<div class="clear"></div>
+	</div>
+
+	<img class="c7-t c7-t2" data-original="img/c7-t2.png">
+
+	<div class="c7-i c7-i2" id="jcScroll">
+		<ul>
+			<li class="yy-click"><img data-original="img/jc/no1-1.jpg"></li>
+			<li class="yy-click"><img data-original="img/jc/no1-2.jpg"></li>
+			<li class="yy-click"><img data-original="img/jc/no1-3.jpg"></li>
+			<li class="yy-click"><img data-original="img/jc/no1-4.jpg"></li>
+			<li class="yy-click"><img data-original="img/jc/no1-5.jpg"></li>
+			<li class="yy-click"><img data-original="img/jc/no1-6.jpg"></li>
+			<li class="yy-click"><img data-original="img/jc/no1-7.jpg"></li>
+			<li class="yy-click"><img data-original="img/jc/no1-8.jpg"></li>
+			<li class="yy-click"><img data-original="img/jc/no1-9.jpg"></li>
+			<li class="yy-click"><img data-original="img/jc/no1-10.jpg"></li>
+			<li class="yy-click"><img data-original="img/jc/no1-11.jpg"></li>
+			<li class="yy-click"><img data-original="img/jc/no1-12.jpg"></li>
+			<li class="yy-click"><img data-original="img/jc/no1-13.jpg"></li>
+		</ul>
+	</div>
+	<script type="text/javascript">
+		//操作dom
+		var oPicList1 = document.getElementById("jcScroll");
+		var oUl1 = oPicList1.getElementsByTagName("ul")[0];
+		var aLi1 = oUl1.getElementsByTagName("li");
+		oUl1.innerHTML += oUl1.innerHTML;
+		oUl1.style.width = aLi1[0].offsetWidth * aLi1.length + "px";
+		oUl1.style.left = -oUl1.offsetWidth / 2;
+		var speed1 = -1;
+		//控制滚动
+		function movePic1() {
+			if (oUl1.offsetLeft <= -oUl1.offsetWidth / 2) {
+				oUl1.style.left = "0";
+			}
+			if (oUl1.offsetLeft > 0) {
+				oUl1.style.left = -oUl1.offsetWidth / 2;
+			}
+			oUl1.style.left = oUl1.offsetLeft + speed1 + "px";
+		}
+
+		var timer1 = setInterval(movePic1, 30);
+		//鼠标操作 暂停/滚动
+		oUl1.onmouseover = function () {
+			clearInterval(timer1);
+		}
+		oUl1.onmouseout = function () {
+			timer1 = setInterval(movePic1, 30);
+		}
+	</script>
+	<img class="c7-t c7-t3" data-original="img/c7-t3.png">
+
+	<div class="c7-i3">
+		<img class="yy-click" style="float: left;width: 480px;" data-original="img/c7-i3-1.jpg">
+		<img class="yy-click" style="float: left;width: 220px;margin-left: 20px;" data-original="img/c7-i3-2.jpg">
+		<img class="yy-click" style="float: left;width: 220px;margin-left: 20px;" data-original="img/c7-i3-3.jpg">
+		<img class="yy-click" style="float: left;width: 220px;margin-left: 20px;margin-top: 15px;" data-original="img/c7-i3-4.jpg">
+		<img class="yy-click" style="float: left;width: 220px;margin-left: 20px;margin-top: 15px;" data-original="img/c7-i3-5.jpg">
+		<img class="yy-click" style="float: left;width: 220px;margin-top: 15px;" data-original="img/c7-i3-6.jpg">
+		<img class="yy-click" style="float: left;width: 220px;margin-left: 20px;margin-top: 15px;" data-original="img/c7-i3-7.jpg">
+		<img class="yy-click" style="float: left;width: 480px;margin-left: 20px;margin-top: 15px;" data-original="img/c7-i3-8.jpg">
+		<img class="yy-click" style="float: left;width: 220px;margin-left: 20px;margin-top: 15px;" data-original="img/c7-i3-9.jpg">
+		<img class="yy-click" style="float: left;width: 230px;margin-left: 20px;margin-top: 15px;" data-original="img/c7-i3-10.jpg">
+		<img class="yy-click" style="float: left;width: 230px;margin-left: 20px;margin-top: 15px;" data-original="img/c7-i3-11.jpg">
+
+		<div class="clear"></div>
+	</div>
+	<img class="c7-t c7-t4" data-original="img/c7-t4.png">
+
+	<div class="c7-i4">
+		<img class="yy-click" data-original="img/yx/1.jpg">
+		<img class="yy-click" data-original="img/yx/2.jpg">
+		<img class="yy-click" data-original="img/yx/3.jpg">
+		<img class="yy-click" data-original="img/yx/4.jpg">
+		<!--<img data-original="img/yx/5.jpg">-->
+		<img class="yy-click" data-original="img/yx/6.jpg">
+
+		<div class="c7-i42">
+			<img class="yy-click" data-original="img/yx/7.jpg">
+			<img class="yy-click" data-original="img/yx/8.jpg">
+			<img class="yy-click" data-original="img/yx/9.jpg">
+		</div>
+	</div>
+	<img class="c7-t c7-t5" data-original="img/c7-t5.png">
+
+	<div class="c7-i5">
+		<img data-original="img/c7-t5-text.png">
+
+		<div class="clear"></div>
+	</div>
+
+
+</div>
+<div class="yy-click channel channel-8">
+	<img class="c1-text" data-original="img/7.jpg">
+</div>
+<div class="channel channel-9">
+	<img class="c1-text" data-original="img/8.jpg">
+</div>
+
+<script type="text/javascript" charset="utf-8" src="http://gate.looyu.com/46258/107590.js"></script>
+
+
+</body>
+</html>

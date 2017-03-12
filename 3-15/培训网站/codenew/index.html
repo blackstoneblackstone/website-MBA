@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>嘉禾博研商学院</title>
+	<link rel="stylesheet" type="text/css" href="css/animate.css"/>
+	<link rel="stylesheet" type="text/css" href="css/style.css"/>
+	<!--右侧漂浮开始-->
+	<script type="text/javascript" charset="utf-8" src="http://gate.looyu.com/46258/107590.js"></script>
+	<script type="text/javascript" src="http://pingjs.qq.com/h5/stats.js" name="MTAH5" sid="500041194"></script>
+	<!--右侧漂浮end-->
+</head>
+
+<body>
+<div id="content" class="content">
+	<div class="chanal-0 animated bounceIn">
+		<div class="c0-m1" id="img1">
+			<img class="c0-bg"
+			     src="img/c0-bg.jpg">
+		</div>
+		<div class="c0-m2 hidden" id="img2">
+			<img class="c0-2-text" src="img/c0-2-text.png" onclick="cClick(this)">
+		</div>
+		<script>
+			var img1 = document.getElementById("img1");
+			var img2 = document.getElementById("img2");
+			var flag = 1;
+			var int = setInterval(function () {
+				if (flag == 1) {
+					img1.className = "c0-m1 animated fadeOut";
+					setTimeout(function () {
+						img1.className = "c0-m1 hidden";
+						img2.className = "c0-m2 animated slideInRight";
+						flag = 2;
+					}, 500);
+
+				} else {
+					img2.className = "c0-m2 animated fadeOut";
+					setTimeout(function () {
+						img2.className = "c0-m2 hidden";
+						img1.className = "c0-m1 animated slideInRight";
+						flag = 1;
+					}, 500);
+				}
+			}, 5000);
+		</script>
+		<div class="c0-items">
+			<div class="c0-item c0-item-1" onclick="cClick(this)">
+				清华、北大、人大名校提前面试</br>
+				黄埔四期本周开班，系统已经开放
+			</div>
+			<div class="c0-item c0-item-2" onclick="cClick(this)">
+				中财、北师大、北航、北理工等名校</br>
+				提前面试第一批次提交材料进行中
+			</div>
+			<div class="c0-item c0-item-3" onclick="cClick(this)">
+				清华，北大，人大名校提前面试</br>
+				黄埔四期本周开班，系统已经开放
+			</div>
+		</div>
+	</div>
+	<div class="chanal-1">
+		<div class="c1-d1">
+			<img class="c1-text" src="img/c1-text.png">
+
+		</div>
+		<div class="c1-d2">
+			<div id="scrollpic">
+				<ul>
+					<li><a href="#"><img src="img/x/1.jpg"/></a></li>
+					<li><a href="#"><img src="img/x/2.jpg"/></a></li>
+					<li><a href="#"><img src="img/x/3.jpg"/></a></li>
+					<li><a href="#"><img src="img/x/4.jpg"/></a></li>
+					<li><a href="#"><img src="img/x/5.jpg"/></a></li>
+					<li><a href="#"><img src="img/x/6.jpg"/></a></li>
+					<li><a href="#"><img src="img/x/7.jpg"/></a></li>
+					<li><a href="#"><img src="img/x/8.jpg"/></a></li>
+					<li><a href="#"><img src="img/x/9.jpg"/></a></li>
+					<li><a href="#"><img src="img/x/10.jpg"/></a></li>
+					<li><a href="#"><img src="img/x/11.jpg"/></a></li>
+					<li><a href="#"><img src="img/x/12.jpg"/></a></li>
+					<li><a href="#"><img src="img/x/13.jpg"/></a></li>
+					<li><a href="#"><img src="img/x/14.jpg"/></a></li>
+					<li><a href="#"><img src="img/x/15.jpg"/></a></li>
+					<li><a href="#"><img src="img/x/16.jpg"/></a></li>
+					<li><a href="#"><img src="img/x/17.jpg"/></a></li>
+					<li><a href="#"><img src="img/x/18.jpg"/></a></li>
+					<li><a href="#"><img src="img/x/19.jpg"/></a></li>
+				</ul>
+			</div>
+			<script type="text/javascript">
+				//操作dom
+				var oPicList = document.getElementById("scrollpic");
+				var oUl = oPicList.getElementsByTagName("ul")[0];
+				var aLi = oUl.getElementsByTagName("li");
+				var aPrev = document.getElementById("prev");
+				var aNext = document.getElementById("next");
+				oUl.innerHTML += oUl.innerHTML;
+				oUl.style.width = aLi[0].offsetWidth * aLi.length + "px";
+				oUl.style.left = -oUl.offsetWidth / 2;
+				var speed = -1;
+				//控制滚动
+				function movePic() {
+					if (oUl.offsetLeft <= -oUl.offsetWidth / 2) {
+						oUl.style.left = "0";
+					}
+					if (oUl.offsetLeft > 0) {
+						oUl.style.left = -oUl.offsetWidth / 2;
+					}
+					oUl.style.left = oUl.offsetLeft + speed + "px";
+				}
+
+				var timer = setInterval(movePic, 30);
+				//鼠标操作 暂停/滚动
+				oUl.onmouseover = function () {
+					clearInterval(timer);
+				}
+				oUl.onmouseout = function () {
+					timer = setInterval(movePic, 30);
+				}
+				//控制图片左右滚动
+				aPrev.onmouseover = function () {
+					speed = 1;
+				}
+				aNext.onmouseover = function () {
+					speed = -1;
+				}
+			</script>
+		</div>
+		<img class="c1-bottom" src="img/c1-bottom.gif">
+	</div>
+
+</div>
+
+<script type="text/javascript">
+	// window.onload = function () {
+	// 	//操作dom
+	// 	var oPicList = document.getElementById("scrollpic");
+	// 	var oUl = oPicList.getElementsByTagName("ul")[0];
+	// 	var aLi = oUl.getElementsByTagName("li");
+	// 	var aPrev = document.getElementById("prev");
+	// 	var aNext = document.getElementById("next");
+	// 	oUl.innerHTML += oUl.innerHTML;
+	// 	oUl.style.width = aLi[0].offsetWidth * aLi.length + "px";
+	// 	oUl.style.left = -oUl.offsetWidth / 2;
+	// 	var speed = -1;
+	// 	//控制滚动
+	// 	function movePic() {
+	// 		if (oUl.offsetLeft <= -oUl.offsetWidth / 2) {
+	// 			oUl.style.left = "0";
+	// 		}
+	// 		if (oUl.offsetLeft > 0) {
+	// 			oUl.style.left = -oUl.offsetWidth / 2;
+	// 		}
+	// 		oUl.style.left = oUl.offsetLeft + speed + "px";
+	// 	}
+
+	// 	var timer = setInterval(movePic, 30);
+	// 	//鼠标操作 暂停/滚动
+	// 	oUl.onmouseover = function () {
+	// 		clearInterval(timer);
+	// 	}
+	// 	oUl.onmouseout = function () {
+	// 		timer = setInterval(movePic, 30);
+	// 	}
+	// 	//控制图片左右滚动
+	// 	aPrev.onmouseover = function () {
+	// 		speed = 1;
+	// 	}
+	// 	aNext.onmouseover = function () {
+	// 		speed = -1;
+	// 	}
+	// }
+	//设置滚动加载
+	window.onscroll = function () {
+		if (getCheck()) {
+			var chanal = document.createElement("div");
+			var chanalImg = document.createElement("img");
+			var content = document.getElementById('content');
+			console.log(getLastChild(content).className);
+			if (getLastChild(content).className == "chanal-1") {
+				chanal.className = "chanal-2";
+				var c2 = '<div class="c2-d1">' +
+						'<img class="c2-text" src="img/c2-text.png">' +
+						'</div>' +
+						'<div class="c2-d2">' +
+						'<img class="animated slideInDown" src="img/j1.jpg">' +
+						'<img class="animated slideInDown" src="img/j2.jpg">' +
+						'<img class="animated slideInDown" src="img/j3.jpg">' +
+						'<img class="animated slideInDown" src="img/j4.jpg">' +
+						'<img class="animated slideInDown" src="img/j5.jpg">' +
+						'<img class="animated slideInDown" src="img/j6.jpg">' +
+						'<img class="animated slideInDown" src="img/j7.jpg">' +
+						'<img class="animated slideInDown" src="img/j8.gif">' +
+						'</div>';
+				chanal.innerHTML = c2;
+				content.appendChild(chanal);
+				return;
+			}
+			if (getLastChild(content).className == "chanal-2") {
+				chanal.className = "chanal-3";
+				var c3 = '<img class="c3-text" src="img/c3-text.png">';
+				chanal.innerHTML = c3;
+				content.appendChild(chanal);
+				return;
+			}
+			if (getLastChild(content).className == "chanal-3") {
+				chanal.className = "chanal-4";
+				var c4 = '<div class="c4-d1">' +
+						'<img class="c4-text" src="img/c4-text.png">' +
+						'</div>' +
+						'<div class="c4-d2">' +
+						'<img onclick="cClick(this)" class="animated rollIn " src="img/s1.png">' +
+						'<img onclick="cClick(this)" class="animated rollIn " src="img/s2.png">' +
+						'<img onclick="cClick(this)" class="animated rollIn " src="img/s3.png">' +
+						'<img onclick="cClick(this)" class="animated rollIn " src="img/s4.png">' +
+						'<img onclick="cClick(this)" class="animated rollIn " src="img/s5.png">' +
+						'<img onclick="cClick(this)" class="animated rollIn " src="img/s6.png">' +
+						'<img onclick="cClick(this)" class="animated rollIn " src="img/s7.png">' +
+						'</div>' +
+						'<div class="c4-d3">' +
+						'<span>十五年的专注</span> <span>十五年的深研	</span> <span>十五年的总结	</span> <span>只为您一次成功</span> <span>		电话咨询：400-6161-598</span>' +
+						'</div>';
+				chanal.innerHTML = c4;
+				content.appendChild(chanal);
+				return;
+			}
+			if (getLastChild(content).className == "chanal-4") {
+				chanal.className = "chanal-5";
+				var c5 = '<div class="c5-d0">' +
+						'<img src="img/c5-text.png">' +
+						'<div class="c5-d1">' +
+						'<img src="img/t1.png"><button onclick="cClick(this)" class="t1-btn animated flash infinite">免费申请</button>' +
+						'</div>' +
+						'</div>' +
+						'<div class="c5-d2">' +
+						'<img src="img/t2.png"><button onclick="cClick(this)" class="t2-btn animated flash infinite">详情咨询</button>' +
+						'</div>' +
+						'<div class="c5-d3">' +
+						'<img src="img/t3.png"></br><button onclick="cClick(this)" class="t3-btn animated flash infinite">申请报名</button>' +
+						'</div>' +
+						'<div class="c5-d4">' +
+						'<img src="img/t4.png"><button onclick="cClick(this)" class="t4-btn animated flash infinite">申请报名</button>' +
+						'</div>'
+				chanal.innerHTML = c5;
+				content.appendChild(chanal);
+				return;
+			}
+			if (getLastChild(content).className == "chanal-5") {
+				chanal.className = "chanal-6";
+				var c6 = '<div class="c6-text">' +
+						'<img onclick="cClick(this)" src="img/c6-text.png">' +
+						'</div>';
+				chanal.innerHTML = c6;
+				content.appendChild(chanal);
+				return;
+			}
+			if (getLastChild(content).className == "chanal-6") {
+				chanal.className = "chanal-7";
+				var c7 = '<img src="img/c6.jpg"><img src="img/c7.png">';
+				chanal.innerHTML = c7;
+				content.appendChild(chanal);
+				return;
+			}
+
+
+		}
+	}
+
+	/**
+	 * 数据请求检验
+	 */
+	function getCheck() {
+		var documentH = document.documentElement.clientHeight;
+		var scrollH = document.documentElement.scrollTop || document.body.scrollTop;
+//		console.log(documentH);
+//		console.log(scrollH);
+//		console.log(getLastH());
+		return documentH + scrollH >= getLastH() ? true : false;
+	}
+	/**
+	 * 获得content所在的高度
+	 */
+	function getLastH() {
+		var content = document.getElementById('content');
+		return content.offsetTop + content.offsetHeight;
+	}
+
+	function getLastChild(n) {
+		var x = n.lastChild;
+		while (x.nodeType != 1) {
+			x = x.previousSibling;
+		}
+		return x;
+	}
+
+	function cClick(elem) {
+		doyoo.util.openChat();
+		doyoo.util.accept();
+		return false;
+	}
+
+</script>
+</body>
+
+</html>

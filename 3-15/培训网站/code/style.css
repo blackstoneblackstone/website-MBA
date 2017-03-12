@@ -1,0 +1,121 @@
+@charset "utf-8";
+/* CSS Document */
+html body{ text-align:center;margin:0; padding:0; background:#eaeaea; font-family:"Microsoft Yahei";}
+div{ margin:0 auto;}
+ul,li{ list-style:none; margin:0; padding:0;}
+.clearfix{ clear:both; overflow:hidden;zoom:1;}
+.cont{ width:1202px; margin:0 auto;}
+a{ text-decoration:none;}
+.clear{ clear:both; font-size:0; line-height:0;}
+img{clear: both;}
+/*第一栏*/
+/*
+.b1_1{ background:url(images/jh1.jpg) no-repeat center bottom; height:260px;}
+.b1_2{ background:url(images/jh2.jpg) no-repeat center top; height:367px;}
+.b1_3{ background:#e53647; padding: 20px 0; text-align: center;}
+*/
+.main_visual{height:667px;overflow:hidden;position:relative;}
+.main_image{height:667px;overflow:hidden;position:relative;}
+.main_image ul{width:9999px;height:667px;overflow:hidden;position:absolute;top:0;left:0}
+.main_image li{float:left;width:100%;height:500px;}
+.main_image li span{display:block;width:100%;height:667px}
+.main_image li a{display:block;width:100%;height:667px}
+.main_image li .img_1{background: url(images/jh1.jpg) center top no-repeat}
+.main_image li .img_2{background: url(images/jh2.jpg) center top no-repeat}
+.main_image li .img_3{background: url(images/jh3.png) center top no-repeat}
+div.flicking_con{position:absolute;top:620px;left:50%;z-index:999;width:300px;height:21px;margin:0 0 0 -50px;}
+div.flicking_con a{float:left;width:21px;height:21px;margin:0;padding:0;background:url('images/btn_main_img.png') 0 0 no-repeat;display:block;text-indent:-3000px}
+div.flicking_con a.on{background-position:0 -21px}
+#btn_prev,#btn_next{z-index:11111;position:absolute;display:block;width:73px!important;height:74px!important;top:50%;margin-top:-37px;display:none;}
+#btn_prev{background:url(images/hover_left.png) no-repeat left top;left:100px;}
+#btn_next{background:url(images/hover_right.png) no-repeat right top;right:100px;}
+.b1_3 {background: #e53647;padding: 20px 0;text-align: center;}
+/*二三栏*/
+.b2_1{ background:url(images/jh2_1.gif) no-repeat center top; height:227px;   }
+.b2_2{ background:url(images/jh2_2.gif) no-repeat center top; height:369px;   }
+.b3_1{ background:url(images/jh4.jpg)  no-repeat center top; height:232px;}
+.b3_2{ background:url(images/jh5.jpg)  no-repeat center top; height:340px;}
+/*第四栏*/
+.b4{ padding: 20px 0; background: #eeeeee;}
+/*五*/
+.b5{ background:#fff url("images/jh7.gif") no-repeat center top; padding-top:110px;}
+/*第六栏*/
+.b6{ background: #efefef;}
+.b6 img:last-child{  margin:20px 0 40px}
+/*第七栏*/
+.b7{ background:#efefef url("images/jh12.gif") no-repeat center top; padding-top:80px;}
+.b7 img:last-child{ margin-bottom: 30px;}
+/*第八栏*/
+.b8{ background: url("images/bg.gif") repeat; padding:20px 0;}
+.b8 img:last-child{  margin:20px 0 40px;}
+/*第九、十栏*/
+.b9{ background:#efefef; padding-bottom:40px;}
+.tc{ background: url("images/tc_bg.jpg") no-repeat center top; height: 317px; width: 1202px;}
+.tc p{    margin: 0;}
+.tc ul{ padding-top: 44px; width: 1202px; overflow: hidden; padding-left: 2px;}
+.tc li{float: left; border-right:1px solid #eaeaea; background: #fff; width: 149px; height: 248px; color: #333; font-size: 12px;}
+.tc li .name{ color: #2375be; font-size: 16px; line-height: 30px; margin-bottom: 10px;}
+.tc li img{ border-radius: 50%;border:2px solid #50bbe5; width: 96px; height: 96px; margin:30px auto 5px;}
+.tc li:hover{ background: #50bbe5; color: #fff;}
+.tc li:hover .name{ color: #fff;}
+.tc li:last-child{ border:none;}
+.tc li:hover img{ border:2px solid #fff; background: #50bbe5; margin: 10px auto 5px;}
+.b10{ background:#efefef url(images/jh17.gif) no-repeat center top; padding-top: 234px;}
+.tc1{ padding:30px 0; width: 1100px; margin:0 auto;   }
+.tc1 li{ background: #e73737; width: 167px; color: #fff; float:left; margin:20px 10px; padding: 10px 13px;}
+.tc1 li img{ width:167px; height: 243px; border: 1px solid #fff; }
+.tc1 li .name{ font-size:16px; border-bottom: 1px solid #f25f5f; height: 24px; margin:0; padding: 5px 0;}
+.fl{float: left;}
+.fr{ float:right;}
+.clearfix{ clear:both; zoom: 1;overflow: hidden;}
+
+.tc1 li .intro{ font-size: 12px; line-height: 16px; border-top: 1px solid #d72525; margin:0; text-align: left; height:48px; padding-top: 5px;}
+/*11栏*/
+.b11{ background:#fff; padding:20px 0; }
+.b11 .tel{ margin-bottom: 20px; margin-top:30px;}
+.book{width:1202px; margin:30px auto; height:282px;}
+.book img{ width:188px; height:278px; background:#fff; margin-right: 1px;  }
+
+/*12栏*/
+.b12{ background: url("images/jh21.gif") no-repeat center top; padding-top: 168px; }
+
+/*上课照片*/
+.photo{ background:url(images/gh_96.png) no-repeat center top; height:109px; margin-bottom:30px;}
+#idGlideView {	height:400px;	margin:20px auto; border:1px solid #ccc; border-left:none;}
+#idGlideView div {	width:533px;border-right:1px solid #ccc;	height:400px}
+#idGlideView div img {border-left:1px solid #ccc; }
+/*13栏*/
+.b13{ background:#fff; padding:20px 0 40px}
+/*14栏*/
+.b14_1{ background: url("images/cjbg.jpg") no-repeat center top;height: 300px; }
+.b14_2{ background: url("images/cjbg1.jpg") no-repeat center top;height: 367px; }
+.cj img{ width:236px; height: 301px;}
+/*135栏*/
+.b15{ background:#efefef  url(images/jh26.gif) no-repeat center top; padding-top: 126px;padding-bottom:20px; }
+/*16栏*/
+.b16{ background: #353535; padding-top:20px; }
+
+.zs{ display: none; text-align: left; width:138px; margin: -8px auto 0;}
+.tc li:hover .zs{ display: block;}
+.tc li:hover .defalut{ display: none;}
+
+.bag{ cursor:pointer;width: 200px; height: 320px;  background: url("images/bag.png") no-repeat; background-size: 200px auto; position: fixed; left: 10px; bottom:50px;;}
+.monkey{ width:80px; height: 80px; background: url("images/monkey.png") no-repeat; position: absolute; right: -49px; top:0px;;
+	background-size: 80px auto;
+animation: myfirst 4s infinite;
+-webkit-animation: myfirst 4s infinite;
+-moz-animation: myfirst 4s infinite;
+-ms-animation: myfirst 4s infinite;
+-o-animation: myfirst 4s infinite;}
+/*css3动画开始*/
+@keyframes myfirst {
+	0% {top:0;opacity:1;}
+	50% {top:30px;opacity:1;}
+	100% {top:0;opacity:1;}
+}
+@-webkit-keyframes myfirst {
+	0% {top:0;opacity:1;}
+	50% {top:30px;opacity:1;}
+	100% {top:0;opacity:1;}
+}
+/*css3动画*/
